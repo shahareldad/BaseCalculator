@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Base Calculator</string>
+    <string name="action_settings">Settings</string>
+    <string name="calc_bases">Calculate bases</string>
+    <string name="insert_number_title">Insert a number in base 10</string>
+    <string name="hexa_title">Base 16 (Hexadicmal)</string>
+    <string name="decimal_base">Base 10 (Decimal)</string>
+    <string name="octal_base">Base 8 (Octal)</string>
+    <string name="quaternary_base">Base 4 (Quaternary)</string>
+    <string name="binary_base">Base 2 (Binary)</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+</resources>
