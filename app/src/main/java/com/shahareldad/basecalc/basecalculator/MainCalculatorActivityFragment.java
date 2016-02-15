@@ -11,11 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainCalculatorActivityFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
+    public static final String StringEmpty = "";
     EditText base2EditText;
     EditText base4EditText;
     EditText base8EditText;
@@ -39,6 +43,23 @@ public class MainCalculatorActivityFragment extends Fragment implements View.OnC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        InitControls();
+
+        InitAdMob();
+    }
+
+    private void InitAdMob() {
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest testRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+
+        mAdView.loadAd(testRequest);
+    }
+
+    private void InitControls() {
         base2EditText = (EditText)view.findViewById(R.id.baseTwoEditText);
         base4EditText = (EditText)view.findViewById(R.id.baseFourEditText);
         base8EditText = (EditText)view.findViewById(R.id.baseEightEditText);
@@ -56,19 +77,19 @@ public class MainCalculatorActivityFragment extends Fragment implements View.OnC
     public void onClick(View v) {
 
         String input = inputNumberEditText.getText().toString();
-        int numericInput = Integer.parseInt(input);
+        long numericInput = Long.parseLong(input);
 
-        base2EditText.setText(CalculateBase(numericInput, 2));
-        base4EditText.setText(CalculateBase(numericInput, 4));
-        base8EditText.setText(CalculateBase(numericInput, 8));
-        base10EditText.setText(CalculateBase(numericInput, 10));
+        base2EditText.setText(CalculateBaseAboveDecimal(numericInput, 2));
+        base4EditText.setText(CalculateBaseAboveDecimal(numericInput, 4));
+        base8EditText.setText(CalculateBaseAboveDecimal(numericInput, 8));
+        base10EditText.setText(CalculateBaseAboveDecimal(numericInput, 10));
         base16EditText.setText(CalculateBaseAboveDecimal(numericInput, 16));
     }
 
-    private String CalculateBaseAboveDecimal(int numericInput, int base) {
+    private String CalculateBaseAboveDecimal(long numericInput, int base) {
 
-        String binaryOutput = "";
-        int temp;
+        String binaryOutput = StringEmpty;
+        long temp;
 
         do {
             temp = numericInput % base;
@@ -79,18 +100,6 @@ public class MainCalculatorActivityFragment extends Fragment implements View.OnC
             else
                 binaryOutput = String.valueOf(numericInput % base) + binaryOutput;
 
-            numericInput = numericInput / base;
-        }while (numericInput != 0);
-
-        return binaryOutput;
-    }
-
-    private String CalculateBase(int numericInput, int base) {
-
-        String binaryOutput = "";
-
-        do {
-            binaryOutput = String.valueOf(numericInput % base) + binaryOutput;
             numericInput = numericInput / base;
         }while (numericInput != 0);
 
